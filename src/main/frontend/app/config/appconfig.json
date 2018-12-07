@@ -3,10 +3,10 @@
     "debugMode": false,
     "webAppRoot": "/",
     "logged": false,
-    "version": "Data Hub System #version developed by a Serco and GAEL Systems consortium under a contract with the European Space Agency - Funded by the EU and ESA",
+    "version": "The ESTHub satellite data portal version #version developed by a Serco and GAEL Systems consortium under a contract with the European Space Agency - Funded by the EU and ESA",
 
     "settings": {
-        "title": "Data Hub System - OSF Installation",
+        "title": "ESTHub satellite data portal (from settings)",
         "logo": "images/datahub.png",
         "t_and_c": "https://scihub.copernicus.eu/twiki/do/view/SciHubWebPortal/TermsConditions",
         "pagination_limit":[25,50,75,100,125,150],
@@ -17,7 +17,7 @@
         "showmap": true,
         "bgimage": "images/bg_s3.jpg",
         "showquicklook": true,
-        "show_newgui_link": true,
+        "show_newgui_link": false,
         "show_userguide": true,
         "show_home": true,
         "show_extended_list": false,
@@ -36,12 +36,13 @@
                 "default_cause": "Invalid"
             },
         "toolbar" : {
-            "title": "Data Hub System - OSF Installation",
+            "title": "ESTHub satellite data portal",
             "userguide_link": "https://scihub.copernicus.eu/userguide",
             "userguide_title": "User Guide",
-            "home_link": "https://scihub.copernicus.eu",
-            "home_title": "Scientific Data Hub Portal",
+            "home_link": "https://esthub.maaamet.ee",
+            "home_title": "ESTHub portal",
             "logos": [
+                {"link":"http://www.maaamet.ee", "image":"images/0_maaamet_vapp_eng_78px_resize.png"},
                 {"link":"http://www.copernicus.eu", "image":"images/EC_standard_logo.png"},
                 {"link":"https://sentinel.esa.int", "image":"images/logo_esa.png"},
                 {"link":"http://www.copernicus.eu", "image":"images/copernicus.png"}
@@ -67,18 +68,6 @@
 
         "isMapLayerSwitcherVisible":true,
         "map":{
-            "Satellite":{
-                "sources":[{
-                    "class":"MapQuest",
-                    "params":{
-                        "layer":"sat",
-                        "wrapX": false
-                    }
-                }],
-                "title": "Satellite",
-                "type":"base",
-                "visible":false
-            },
             "Road":{
                 "sources":[{
                     "class":"OSM",
@@ -90,22 +79,58 @@
                 "type":"base",
                 "visible":true
             },
-            "Hybrid":{
-                "sources":[  {
-                        "class": "MapQuest",
-                        "params":{
-                            "layer":"sat",
-                            "wrapX": false
-                        }
-                    },
+            "Satellite":{
+                "sources":[
                     {
-                        "class": "MapQuest",
-                        "params":{
-                            "layer":"hyb",
-                            "wrapX": false
-                        }
+                        "class": "TileWMS",
+                        "params": {
+                            "url": "https://tiles.maaamet.ee/tm/",
+                            "params": {
+                                "LAYERS":"foto",
+                                "TILED": true,
+                                "WIDTH": "512",
+                                "HEIGHT": "512"
+                            }
+                        },
+                        "serverType": "mapserver"
+                    }],
+                "title": "Ortophoto",
+                "type":"base",
+                "visible":false
+            },
+            "Hybrid":{
+                "sources":[
+                    {
+                        "class": "TileWMS",
+                        "params": {
+                            "url": "https://tiles.maaamet.ee/tm/",
+                            "params": {
+                                "LAYERS":"foto,hybriid",
+                                "TILED": true,
+                                "WIDTH": "512",
+                                "HEIGHT": "512"
+                            }
+                        },
+                        "serverType": "mapserver"
                     }],
                 "title": "Hybrid",
+                "type":"base",
+                "visible":false
+            },
+            "WMS2":{
+                "sources":[
+                    {
+                        "class": "TileWMS",
+                        "params": {
+                            "url": "http://urbantep-wms:8080/geoserver/ows",
+                            "params": {
+                                "LAYERS":"utep:timescan-s2-pyramid",
+                                "TILED": true
+                            }
+                        },
+                        "serverType": "mapserver"
+                    }],
+                "title": "Urban-TEP Timescan",
                 "type":"base",
                 "visible":false
             }
@@ -162,13 +187,6 @@
                     "indexname": "relativeorbitnumber",
                     "indexlabel": "Relative Orbit Number (from 1 to 175)",
                     "regex": "[1-9]|[1-9][0-9]|[1-9][0-7][0-5]"
-                },
-                {
-                    "indexname": "collection",
-            "indexlabel": "Collection",
-                    "indexvalues": "S1B_24AUG2016",
-                    "regex": ".*"
-
                 }
             ]
         },
@@ -191,7 +209,7 @@
                 {
                     "indexname": "producttype",
                     "indexlabel": "Product Type",
-                    "indexvalues": "DO_0_DOP___|DO_0_NAV___|GN_0_GNS___|MW_0_MWR___|MW_1_CAL___|MW_1_MWR___|OL_0_CR0___|OL_0_CR1___|OL_0_EFR___|OL_1_EFR___|OL_1_EFR_BW|OL_1_ERR___|OL_1_ERR_BW|OL_1_RAC___|OL_1_SPC___|OL_2_LFR___|OL_2_LFR_BW|OL_2_LRR___|OL_2_LRR_BW|SL_0_SLT___|SL_1_RBT___|SL_1_RBT_BW|SL_2_LST___|SL_2_LST_BW|SR_0_CAL___|SR_0_SRA___|SR_1_CAL___|SR_1_SRA___|SR_2_LAN___|SY_1_MISR__|SY_2_SYN___|SY_2_V10___|SY_2_VG1___|SY_2_VGK___|SY_2_VGP___|TM_0_HKM___|TM_0_HKM2__|TM_0_NAT___",
+                    "indexvalues": "OL_1_EFR___|OL_2_LFR___|OL_2_WFR___|SL_1_RBT___|SL_2_LST___|SL_2_WST___|SR_1_SRA___|SR_1_SRA_A_|SR_1_SRA_BS|SR_2_LAN___|SR_2_WAT___",
                     "regex": ".*"
                 },
                 {
@@ -203,13 +221,13 @@
                 {
                     "indexname": "instrumentshortname",
                     "indexlabel": "Instrument",
-                    "indexvalues": "OLCI|SLSTR|SRAL|DORIS|MWR|GNSS|SYNERGY|HKTM|NAVATT",
+                    "indexvalues": "OLCI|SLSTR|SRAL",
                     "regex": ".*"
                 },
                 {
                     "indexname": "productlevel",
                     "indexlabel": "Product Level",
-                    "indexvalues": "L0|L1|L2",
+                    "indexvalues": "L1|L2",
                     "regex": ".*"
                 },
                 {
