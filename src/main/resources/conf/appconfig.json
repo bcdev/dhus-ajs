@@ -2,12 +2,12 @@
 
     "debugMode": false,
     "webAppRoot": "/",
-    "version": "Data Hub System #version developed by a Serco and GAEL Systems consortium under a contract with the European Space Agency - Funded by the EU and ESA",
+    "version": "The ESTHub satellite data portal version #version developed by a Serco and GAEL Systems consortium under a contract with the European Space Agency - Funded by the EU and ESA",
 
     "settings": {
         "hide_login_title":false,
-        "login_title": "",  
-        "title": "Copernicus Scientific Data Hub",
+        "login_title": "",
+        "title": "ESTHub satellite data portal (from settings)",
         "logo": "images/datahub.png",
         "t_and_c": "https://scihub.copernicus.eu/twiki/do/view/SciHubWebPortal/TermsConditions",
         "pagination_limit": [25, 50, 75, 100, 125, 150],
@@ -47,15 +47,16 @@
             "default_cause": "Invalid"
         },
         "toolbar": {
-            "title": "Data Hub System - OSF Installation",
+            "title": "ESTHub satellite data portal",
             "userguide_link": "https://scihub.copernicus.eu/userguide",
             "userguide_title": "User Guide",
-            "home_link": "https://scihub.copernicus.eu",
-            "home_title": "Scientific Data Hub Portal",
+            "home_link": "https://esthub.maaamet.ee",
+            "home_title": "ESTHub portal",
             "logos": [
-                { "link": "http://www.copernicus.eu", "image": "images/EC_standard_logo.png" },
-                { "link": "https://sentinel.esa.int", "image": "images/logo_esa.png" },
-                { "link": "http://www.copernicus.eu", "image": "images/copernicus.png" }
+                {"link":"http://www.maaamet.ee", "image":"images/0_maaamet_vapp_eng_78px_resize.png"},
+                {"link":"http://www.copernicus.eu", "image":"images/EC_standard_logo.png"},
+                {"link":"https://sentinel.esa.int", "image":"images/logo_esa.png"},
+                {"link":"http://www.copernicus.eu", "image":"images/copernicus.png"}
             ],
             "rightlogos": []
         },
@@ -89,48 +90,73 @@
         }],
         "orderOptions": [{ "name": "Descending", "value": "desc" }, { "name": "Ascending", "value": "asc" }],
 
-        "isMapLayerSwitcherVisible": true,
-        "map": {
-            "Satellite": {
-                "sources": [{
-                    "class": "MapQuest",
-                    "params": {
-                        "layer": "sat",
-                        "wrapX": false
-                    }
-                }],
-                "title": "Satellite",
-                "type": "base",
-                "visible": false
-            },
-            "Road": {
-                "sources": [{
-                    "class": "OSM",
-                    "params": {
+        "isMapLayerSwitcherVisible":true,
+        "map":{
+            "Road":{
+                "sources":[{
+                    "class":"OSM",
+                    "params":{
                         "wrapX": false
                     }
                 }],
                 "title": "Road",
-                "type": "base",
-                "visible": true
+                "type":"base",
+                "visible":true
             },
-            "Hybrid": {
-                "sources": [{
-                    "class": "MapQuest",
-                    "params": {
-                        "layer": "sat",
-                        "wrapX": false
-                    }
-                }, {
-                    "class": "MapQuest",
-                    "params": {
-                        "layer": "hyb",
-                        "wrapX": false
-                    }
-                }],
+            "Satellite":{
+                "sources":[
+                    {
+                        "class": "TileWMS",
+                        "params": {
+                            "url": "https://tiles.maaamet.ee/tm/",
+                            "params": {
+                                "LAYERS":"foto",
+                                "TILED": true,
+                                "WIDTH": "512",
+                                "HEIGHT": "512"
+                            }
+                        },
+                        "serverType": "mapserver"
+                    }],
+                "title": "Ortophoto",
+                "type":"base",
+                "visible":false
+            },
+            "Hybrid":{
+                "sources":[
+                    {
+                        "class": "TileWMS",
+                        "params": {
+                            "url": "https://tiles.maaamet.ee/tm/",
+                            "params": {
+                                "LAYERS":"foto,hybriid",
+                                "TILED": true,
+                                "WIDTH": "512",
+                                "HEIGHT": "512"
+                            }
+                        },
+                        "serverType": "mapserver"
+                    }],
                 "title": "Hybrid",
-                "type": "base",
-                "visible": false
+                "type":"base",
+                "visible":false
+            },
+            "WMS2":{
+                "sources":[
+                    {
+                        "class": "TileWMS",
+                        "params": {
+                            "url": "http://urbantep-wms:8080/geoserver/ows",
+                            "params": {
+                                "LAYERS":"utep:timescan-s2-pyramid",
+                                "TILED": true
+                            }
+                        },
+                        "serverType": "mapserver"
+                    }],
+                "title": "Urban-TEP Timescan",
+                "type":"base",
+                "visible":false
             }
         },
 
@@ -193,7 +219,7 @@
             "regex": ".*",
             "indexname": "producttype",
             "indexlabel": "Product Type",
-            "indexvalues": "S2MSI1C|S2MSI2A|S2MSI2Ap"
+            "indexvalues": "S2MSI1C|S2MSI2A"
         }, {
             "regex": "[1-9]|[1-9][0-9]|[1-9][0-4][0-9]",
             "indexname": "relativeorbitnumber",
@@ -211,7 +237,7 @@
             "regex": ".*",
             "indexname": "producttype",
             "indexlabel": "Product Type",
-            "indexvalues": "OL_1_EFR___|OL_1_ERR___|SL_1_RBT___|SR_1_SRA___|SR_1_SRA_A_|SR_1_SRA_BS|OL_2_LFR___|OL_2_LRR___|SR_2_LAN___|SL_2_LST___"
+            "indexvalues": "OL_1_EFR___|OL_2_LFR___|OL_2_WFR___|SL_1_RBT___|SL_2_LST___|SL_2_WST___|SR_1_SRA___|SR_1_SRA_A_|SR_1_SRA_BS|SR_2_LAN___|SR_2_WAT___"
         }, {
             "regex": ".*",
             "indexname": "timeliness",
@@ -312,5 +338,60 @@
             "regex": ".*"
         }]
 
-    }]
+                },
+                {
+                    "indexname": "relativeorbitnumber",
+                    "indexlabel": "Relative Orbit Number (from 1 to 175)",
+                    "regex": "[1-9]|[1-9][0-9]|[1-9][0-7][0-5]"
+                }
+            ]
+        },
+        {
+            "name": "Mission: Sentinel-2",
+            "indexname": "platformname",
+            "indexvalue": "Sentinel-2",
+            "filters": [
+                {
+                    "indexname": "cloudcoverpercentage",
+                    "indexlabel": "Cloud Cover % (e.g.[0 TO 9.4])"
+                }
+                ]
+        },
+        {
+            "name": "Mission: Sentinel-3",
+            "indexname": "platformname",
+            "indexvalue": "Sentinel-3",
+            "filters": [
+                {
+                    "indexname": "producttype",
+                    "indexlabel": "Product Type",
+                    "indexvalues": "OL_1_EFR___|OL_2_LFR___|OL_2_WFR___|SL_1_RBT___|SL_2_LST___|SL_2_WST___|SR_1_SRA___|SR_1_SRA_A_|SR_1_SRA_BS|SR_2_LAN___|SR_2_WAT___",
+                    "regex": ".*"
+                },
+                {
+                    "indexname": "timeliness",
+                    "indexlabel": "Timeliness",
+                    "indexvalues": "Near Real Time|Short Time Critical|Non Time Critical",
+                    "regex": ".*"
+                },
+                {
+                    "indexname": "instrumentshortname",
+                    "indexlabel": "Instrument",
+                    "indexvalues": "OLCI|SLSTR|SRAL",
+                    "regex": ".*"
+                },
+                {
+                    "indexname": "productlevel",
+                    "indexlabel": "Product Level",
+                    "indexvalues": "L1|L2",
+                    "regex": ".*"
+                },
+                {
+                    "indexname": "relativeorbitnumber",
+                    "indexlabel": "Relative Orbit Start [1-385]",
+                    "regex": ".*"
+                }
+            ]
+        }
+    ]
 }

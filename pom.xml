@@ -15,7 +15,7 @@
    <artifactId>dhus-web-client</artifactId>
    <groupId>fr.gael.dhus</groupId>
    <packaging>jar</packaging>
-   <version>0.17.1-1-osf</version>
+   <version>0.17.1-1-osf-esthub</version>
 
    <name>DHuS - Web Client</name>
 
