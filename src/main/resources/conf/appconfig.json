@@ -140,23 +140,6 @@
                 "title": "Hybrid",
                 "type":"base",
                 "visible":false
-            },
-            "WMS2":{
-                "sources":[
-                    {
-                        "class": "TileWMS",
-                        "params": {
-                            "url": "http://urbantep-wms:8080/geoserver/ows",
-                            "params": {
-                                "LAYERS":"utep:timescan-s2-pyramid",
-                                "TILED": true
-                            }
-                        },
-                        "serverType": "mapserver"
-                    }],
-                "title": "Urban-TEP Timescan",
-                "type":"base",
-                "visible":false
             }
         },
 
@@ -167,7 +150,7 @@
                     "wrapX": false
                 }
             }],
-            "title": "Road",
+            "title": "Hybrid",
             "type": "base",
             "visible": true
         }
@@ -219,7 +202,7 @@
             "regex": ".*",
             "indexname": "producttype",
             "indexlabel": "Product Type",
-            "indexvalues": "S2MSI1C|S2MSI2A"
+            "indexvalues": "S2MSI1C"
         }, {
             "regex": "[1-9]|[1-9][0-9]|[1-9][0-4][0-9]",
             "indexname": "relativeorbitnumber",
@@ -247,7 +230,7 @@
             "regex": ".*",
             "indexname": "instrumentshortname",
             "indexlabel": "Instrument",
-            "indexvalues": "OLCI|SLSTR"
+            "indexvalues": "OLCI|SLSTR|SRAL"
         }, {
             "regex": ".*",
             "indexname": "productlevel",
@@ -258,140 +241,6 @@
             "indexname": "relativeorbitnumber",
             "indexlabel": "Relative Orbit Start [1-385]"
             }]
-        }, {
-        "name": "Mission: Sentinel-5P",
-        "indexname": "platformname",
-        "indexvalue": "Sentinel-5",
-        "filters": [
-            {
-                "indexname": "producttype",
-                "indexlabel": "Product Type",
-                "indexvalues": "L1B_IR_SIR|L1B_IR_UVN|L1B_RA_BD1|L1B_RA_BD2|L1B_RA_BD3|L1B_RA_BD4|L1B_RA_BD5|L1B_RA_BD6|L1B_RA_BD7|L1B_RA_BD8|L2__AER_AI|L2__CLOUD_|L2__CO____|L2__NO2___|L2__NP_BD3|L2__NP_BD6|L2__NP_BD7|L2__O3____",
-                "regex": ".*"
-            },
-            {
-                "indexname": "processinglevel",
-                "indexlabel": "Processing Level",
-                "indexvalues": "L1B|L2",
-                "regex": ".*"
-            },
-            {
-                "indexname": "processingmode",
-                "indexlabel": "Timeliness",
-                "indexvalues": "Offline|Near real time",
-                "regex": ".*"
-            },
-            {
-                "indexname": "orbitnumber",
-                "indexlabel": "Absolute Orbit Number",
-                "regex": ".*"
-            }]
-        }, {
-        "name": "Mission: Sentinel-5P Auxiliary",
-        "indexname": "platformname",
-        "indexvalue": "Sentinel-5",
-        "filters": [
-            {
-            "indexname": "producttype",
-            "indexlabel": "Input Auxiliary Files for Product Type",
-            "complexindexes": [
-            {
-                "label": "FRESCO",
-                "value": "(AUX_MET_TP OR AUX_MET_2D OR AUX_NISE__)"
-            },{
-                "label": "AER_LH",
-                "value": "(AUX_MET_TP OR AUX_MET_2D OR AUX_NISE__ OR L2__FRESCO OR L2__NP_BD6 OR L2__AER_AI)"
-            },{
-                "label": "CO____",
-                "value": "(AUX_MET_TP OR AUX_MET_QP OR AUX_MET_2D OR AUX_CTM_CO OR AUX_CTMCH4)"
-            },{
-                "label": "CH4___",
-                "value": "(AUX_MET_TP OR AUX_MET_QP OR AUX_MET_2D OR AUX_CTM_CO OR AUX_CTMCH4 OR L2__FRESCO OR L2__NP_BD6 OR L2__NP_BD7 OR L2__CO____)"
-            },{
-                "label": "O3__PR",
-                "value": "(AUX_MET_TP OR AUX_MET_2D OR AUX_NISE__ OR L2__FRESCO OR L2__AER_AI)"
-            },{
-                "label": "O3_TPR",
-                "value": "(AUX_MET_TP OR AUX_MET_2D OR AUX_NISE__ OR L2__FRESCO OR L2__AER_AI OR L2__O3__PR)"
-            },{
-                "label": "SO2___",
-                "value": "(AUX_MET_TP OR AUX_MET_QP OR AUX_MET_2D OR AUX_NISE__ OR AUX_CTMFCT OR AUX_CTMANA OR AUX_BGSO2_ OR L2__AER_AI OR L2__O3____ OR L2__CLOUD_)"
-            },{
-                "label": "CLOUD_",
-                "value": "(AUX_MET_TP OR AUX_MET_QP OR AUX_MET_2D OR AUX_NISE__ )"
-            },{
-                "label": "O3____",
-                "value": "(AUX_MET_TP OR AUX_MET_QP OR AUX_MET_2D OR AUX_NISE__ OR L2__CLOUD_)"
-            },{
-                "label": "HCHO__",
-                "value": "(AUX_MET_TP OR AUX_MET_QP OR AUX_MET_2D OR AUX_NISE__ OR AUX_CTMFCT OR AUX_CTMANA OR AUX_BGHCHO OR L2__AER_AI OR L2__CLOUD_)"
-            },{
-                "label": "AER_AI",
-                "value": "AUX_MET_2D"
-            },{
-                "label": "NO2___",
-                "value": "(AUX_MET_2D OR AUX_NISE__ OR AUX_CTMFCT OR L2__FRESCO OR L2__AER_AI)"
-            },{
-                "label": "O3_TCL",
-                "value": "L2__O3____"
-            }],            
-            "regex": ".*"
-        }]
-
-                },
-                {
-                    "indexname": "relativeorbitnumber",
-                    "indexlabel": "Relative Orbit Number (from 1 to 175)",
-                    "regex": "[1-9]|[1-9][0-9]|[1-9][0-7][0-5]"
-                }
-            ]
-        },
-        {
-            "name": "Mission: Sentinel-2",
-            "indexname": "platformname",
-            "indexvalue": "Sentinel-2",
-            "filters": [
-                {
-                    "indexname": "cloudcoverpercentage",
-                    "indexlabel": "Cloud Cover % (e.g.[0 TO 9.4])"
-                }
-                ]
-        },
-        {
-            "name": "Mission: Sentinel-3",
-            "indexname": "platformname",
-            "indexvalue": "Sentinel-3",
-            "filters": [
-                {
-                    "indexname": "producttype",
-                    "indexlabel": "Product Type",
-                    "indexvalues": "OL_1_EFR___|OL_2_LFR___|OL_2_WFR___|SL_1_RBT___|SL_2_LST___|SL_2_WST___|SR_1_SRA___|SR_1_SRA_A_|SR_1_SRA_BS|SR_2_LAN___|SR_2_WAT___",
-                    "regex": ".*"
-                },
-                {
-                    "indexname": "timeliness",
-                    "indexlabel": "Timeliness",
-                    "indexvalues": "Near Real Time|Short Time Critical|Non Time Critical",
-                    "regex": ".*"
-                },
-                {
-                    "indexname": "instrumentshortname",
-                    "indexlabel": "Instrument",
-                    "indexvalues": "OLCI|SLSTR|SRAL",
-                    "regex": ".*"
-                },
-                {
-                    "indexname": "productlevel",
-                    "indexlabel": "Product Level",
-                    "indexvalues": "L1|L2",
-                    "regex": ".*"
-                },
-                {
-                    "indexname": "relativeorbitnumber",
-                    "indexlabel": "Relative Orbit Start [1-385]",
-                    "regex": ".*"
-                }
-            ]
         }
     ]
 }

@@ -2849,7 +2849,7 @@ ol.control.LayerSwitcherImage.prototype.drawList = function(ul, layers)
 	ul.css("overflow-y","auto");
 
 	resizeLayerSwitcher();
-	var center = ol.proj.transform([13.8428, 41.8123],'EPSG:4326','EPSG:3857');
+	var center = ol.proj.transform([24.8, 59.4],'EPSG:4326','EPSG:3857');
 	layers.forEach(function(layer, idx)
 	{					
 		if (layer.get("displayInLayerSwitcher")!==false){	
